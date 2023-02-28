@@ -1,0 +1,261 @@
+<template>
+    <lightning-card  title="Search Records">
+    
+        <div class="slds-grid slds-gutters slds-wrap" >
+            <div class="slds-col slds-size_6-of-12  ">
+                <p><b>Property Name</b><lightning-input type ='text'  value={propertyName}  onchange={getPropertyName} class="slds-m-left_large"></lightning-input> </p>    
+            </div>
+            <div class="slds-col slds-size_6-of-12  ">  
+                <p><b>Property #</b><lightning-input type ='text' value={propertyId}  onchange={getPropertyId} class="slds-m-left_large"></lightning-input> </p> 
+            </div>
+            <div class="slds-col slds-size_6-of-12  ">
+                <p><b>Customer Name</b><lightning-input type ='text' value={CustomerName}   onchange={getCustomerName} class="slds-m-left_large"></lightning-input> </p>    
+            </div>
+            <div class="slds-col slds-size_6-of-12  ">  
+                <p><b>Booking Reference</b><lightning-input type ='text' value={BookingRef}   onchange={getBookingref} class="slds-m-left_large"></lightning-input> </p> 
+            </div>
+            <div class="slds-col slds-size_6-of-12  ">  
+                <p><b>Quote No</b><lightning-input type ='text' value={QuoteNo}   onchange={getQuoteNo} class="slds-m-left_large"></lightning-input> </p> 
+            </div>
+         </div>
+         <p slot="footer"><lightning-button type = 'button' label="Search" variant="Brand" onclick={search}></lightning-button></p>
+        
+    </lightning-card>
+
+   
+
+                                        <!--Property Records-->
+
+
+    <lightning-card  title="Property Records" >
+        <div class="slds-grid slds-gutters slds-wrap">
+   
+        <template if:true={ShowProperties}>
+
+        <template for:each={PropertyRecords} for:item="pRec">
+         <!-- <div key={pRec.Id}> -->
+            <Lightning-card key={pRec.Id} title={pRec.Name} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12 ">
+                <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                    <!-- <div class="slds-col slds-size_6-of-12  ">
+                        <p><b>Property Name : </b>{pRec.Name} </p>    
+                    </div> -->
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Property # : </b><a href="https://d5g00000fdfpaea5-dev-ed.lightning.force.com/lightning/n/Property" target="_blank">{pRec.Property__c} </a></p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Area : </b>{pRec.Area__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>State : </b>{pRec.State__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>District : </b>{pRec.District__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Type : </b>{pRec.Type__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Storey : </b>{pRec.Storey__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Built On : </b>{pRec.Built_On__c} </p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Property Age : </b>{pRec.Property_Age_Years__c} </p> 
+                    </div>
+                   <!-- <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Need Renovation</b> {pRec.Needs_Renovation__c}</p> 
+                    </div> -->
+                    
+                    
+                   </div> 
+                </Lightning-card>
+               <!-- </div> -->
+            </template>
+        </template>
+    </div>
+        <template if:true={ShowNoProprties}>
+            <b>NO RELATED RECORD FOUND</b>
+        </template>
+    
+
+    </lightning-card>
+
+
+
+    <!--Property Booking Records-->
+
+
+
+    <lightning-card  title="Property Booking Records">
+        <div class="slds-grid slds-gutters slds-wrap">
+   
+        <template if:true={ShowPropertyBooking}>
+
+        <template for:each={PropertyBookingRecords} for:item="proBooRec">
+         <!-- <div key={pRec.Id}> -->
+            <Lightning-card key={proBooRec.Id} title={proBooRec.Name} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12">
+                <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                    <!-- <div class="slds-col slds-size_6-of-12  ">
+                        <p><b>Property Name : </b>{pRec.Name} </p>    
+                    </div> -->
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Booking Reference : </b><a href="https://d5g00000fdfpaea5-dev-ed.lightning.force.com/lightning/n/Property_Booking" target="_blank">{proBooRec.Name} </a></p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Property Name : </b>{proBooRec.Property__r.Name} </p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Customer Name : </b>{proBooRec.Customer__r.Name}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Status : </b>{proBooRec.Status__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Actual Price : </b>{proBooRec.Actual_Price__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Quoted Price : </b>{proBooRec.Quoted_Price__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Quotation Generated : </b>{proBooRec.Quotation_Generated__c}</p> 
+                    </div>
+                    
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Acquire Property By : </b>{proBooRec.Acquire_Property_By__c} </p> 
+                    </div>
+                   <!-- <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Need Renovation</b> {pRec.Needs_Renovation__c}</p> 
+                    </div> -->
+                    
+                    
+                   </div> 
+                </Lightning-card>
+               <!-- </div> -->
+            </template>
+        </template>
+    </div>
+        <template if:true={ShowNoPropertyBooking}>
+            <b>NO RELATED RECORD FOUND</b>
+        </template>
+    
+
+    </lightning-card>
+
+
+
+
+
+    <!--Quotation Records-->
+
+
+
+    <lightning-card  title="Quotation Records">
+        <div class="slds-grid slds-gutters slds-wrap">
+   
+        <template if:true={ShowQuotation}>
+
+        <template for:each={QuotationRecords} for:item="QuotRec">
+         <!-- <div key={pRec.Id}> -->
+            <Lightning-card key={QuotRec.Id} title={QuotRec.Quote_No__c} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12">
+                <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                   <!--
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Booking Reference</b>{QuotRec.Booking_Ref__c} </p> 
+                    </div> -->
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Property Name : </b>{QuotRec.Name}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Customer Name : </b>{QuotRec.Customer_Name__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Property Type : </b>{QuotRec.Property_Type__c}</p> 
+                    </div>
+                    
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Acquire Property By : </b>{QuotRec.Acquire_Property_By__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Price : </b>{QuotRec.Price__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Quoted To Customer : </b>{QuotRec.Quoted_to_Customer__c} </p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Customer Email : </b>{QuotRec.Customer_Email__c} </p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Quote No : </b><a href="https://d5g00000fdfpaea5-dev-ed.lightning.force.com/lightning/n/Quotations" target="_blank"> {QuotRec.Quote_No__c}</a></p> 
+                    </div> 
+                    
+                    
+                   </div> 
+                </Lightning-card>
+               <!-- </div> -->
+            </template>
+        </template>
+    </div>
+        <template if:true={ShowNoQuotation}>
+            <b>NO RELATED RECORD FOUND</b>
+        </template>
+    
+
+    </lightning-card>
+
+
+
+
+    <!--Customer Records-->
+
+
+
+    <lightning-card  title="Customer Records">
+        <div class="slds-grid slds-gutters slds-wrap">
+   
+        <template if:true={ShowCustomer}>
+
+        <template for:each={CustomerRecords} for:item="CustRec">
+         
+            <Lightning-card key={CustRec.Id} title={CustRec.Name} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12">
+                <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                    <div class="slds-col slds-size_6-of-12  "> 
+                     <p><b>Customer Name : </b>  <a href="https://d5g00000fdfpaea5-dev-ed.lightning.force.com/lightning/n/Customers" target="_blank">{CustRec.Name}</a>  </p>
+                         
+                    </div> 
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Aadhar : </b>{CustRec.Aadhar__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>PAN : </b>{CustRec.PAN__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>State : </b>{CustRec.State__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>District : </b>{CustRec.District__c}</p> 
+                    </div>
+ 
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Email : </b>{CustRec.Email__c}</p> 
+                    </div>
+                    <div class="slds-col slds-size_6-of-12  ">  
+                        <p><b>Phone Number : </b>{CustRec.Phone__c} </p> 
+                    </div>
+                    
+                    
+                   </div> 
+                </Lightning-card>
+              
+            </template>
+        </template>
+    </div>
+        <template if:true={ShowNoCustomer}>
+            <b>NO RELATED RECORD FOUND</b>
+        </template>
+    
+
+    </lightning-card> 
+
+
+</template>

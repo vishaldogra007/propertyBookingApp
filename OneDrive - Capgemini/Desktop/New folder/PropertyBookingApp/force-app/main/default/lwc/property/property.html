@@ -1,0 +1,79 @@
+<template>
+
+    <lightning-card>
+        <template if:true={showButton}>
+          <lightning-button label="New Property" variant="Brand" onclick={createnewProperty}></lightning-button>
+        </template>
+        </lightning-card>
+
+
+        <template if:true={opennewPropertForm}>
+            <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+              <div class="slds-modal__container">
+                <!-- modal header start -->
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                        <lightning-icon icon-name="utility:close"
+                           alternative-text="close"
+                           variant="inverse"
+                           size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Add New Property</h2>
+                  </header>
+              
+                  <!-- modal body start -->
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <lightning-record-form  object-api-name={objectApiName}
+                    fields={PropertyField}  mode="edit" onsubmit={AddProperty} oncancel={hideForm}>
+                </lightning-record-form>
+                  </div>    
+               </div> 
+            </section>
+            
+          </template>
+    
+    <template for:each={allProperties} for:item="pRec">
+        <!-- <div key={pRec.Id}> -->
+           <Lightning-card key={pRec.Id} title={pRec.Name} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12 ">
+               <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                   <!-- <div class="slds-col slds-size_6-of-12  ">
+                       <p><b>Property Name : </b>{pRec.Name} </p>    
+                   </div> -->
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Property #</b>{pRec.Property__c} </p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Area : </b>{pRec.Area__c}</p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>State : </b>{pRec.State__c}</p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>District : </b>{pRec.District__c}</p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Type : </b>{pRec.Type__c}</p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Storey : </b>{pRec.Storey__c}</p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Built On : </b>{pRec.Built_On__c} </p> 
+                   </div>
+                   <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Property Age : </b>{pRec.Property_Age_Years__c} </p> 
+                   </div>
+                  <!-- <div class="slds-col slds-size_6-of-12  ">  
+                       <p><b>Need Renovation</b> {pRec.Needs_Renovation__c}</p> 
+                   </div> -->
+                   
+                   
+                  </div> 
+               </Lightning-card>
+              <!-- </div> -->
+           </template>
+
+
+
+</template>

@@ -1,0 +1,280 @@
+<template>
+
+    <lightning-card>
+        <template if:true={showButton}>
+          <lightning-button label="Book Property" variant="Brand" onclick={createnewPropertyBooking}></lightning-button>
+        </template>
+        </lightning-card>
+
+
+        <!-- New Property booking button form-->
+
+        <template if:true={opennewPropertyBookingForm}>
+            <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+              <div class="slds-modal__container">
+                <!-- modal header start -->
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                        <lightning-icon icon-name="utility:close"
+                           alternative-text="close"
+                           variant="inverse"
+                           size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Book Property</h2>
+                  </header>
+              
+                  <!-- modal body start -->
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <lightning-record-form  object-api-name={propertyBookingobjectApiName}
+                    fields={PropertyBookingField}  mode="edit" onsubmit={AddPropertyBooking} oncancel={hideForm}>
+                </lightning-record-form>
+                  </div>    
+               </div> 
+            </section>
+            
+          </template>
+
+    
+         <lightning-datatable
+            key-field="id"
+            data={data}
+            columns={columns}
+            onrowaction={buttonaction}>
+    </lightning-datatable>
+     
+                               <!-- Open Quotation Button Form -->
+
+     <template if:true={viewForm}>
+        <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+             
+              <header class="slds-modal__header">
+                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                    <lightning-icon icon-name="utility:close"
+                       alternative-text="close"
+                       variant="inverse"
+                       size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                 </button>
+                 <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Your Quotation</h2>
+              </header>
+           
+              
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                
+                
+                  <div class="slds-grid slds-gutters slds-wrap" >
+                        <div class="slds-col slds-size_6-of-12 slds-box slds-box_small ">
+                            <p><b>Booking Ref:</b><span class="slds-m-left_large">{quotationData.Booking_Ref__c}</span> </p>    
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 slds-box slds-box_small ">  
+                            <p><b>Property Name:</b><span class="slds-m-left_large">{quotationData.Name}</span> </p> 
+                        </div>
+                    <br>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                        <p><b>Property Type:</b><span class="slds-m-left_large">{quotationData.Property_Type__c}</span> </p> 
+                         
+                    
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                         
+                        <p><b>Customer Name:</b><span class="slds-m-left_large">{quotationData.Customer_Name__c}</span> </p> 
+                    
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                        <p><b>Acquire Property By:</b><span class="slds-m-left_large">{quotationData.Acquire_Property_By__c}</span> </p> 
+                        
+                    
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                        <p><b>Price:</b><span class="slds-m-left_large">{quotationData.Price__c}</span> </p>
+                        
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                       
+                        <p><b>Quoted to Customer:</b><span class="slds-m-left_large">{quotationData.Quoted_to_Customer__c}</span> </p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                        <p><b>Customer Email:</b><span class="slds-m-left_large">{quotationData.Customer_Email__c}</span> </p>
+                       
+                        
+                    </div> 
+                    <div class="slds-col slds-size_6-of-12 slds-box slds-box_small">
+                        
+                        <p><b>Quote Number:</b><span class="slds-m-left_large">{quotationData.Quote_No__c}</span> </p>
+                        
+                    </div> 
+                </div>
+                
+                <lightning-button label="Cancel" variant="Brand" onclick={hideForm}></lightning-button>
+              </div>    
+           </div> 
+        </section>
+        
+      </template> 
+
+
+                        <!--No Quotation found-->
+
+     <template if:true={NoQuotationForm}>
+        <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <!-- modal header start -->
+              <header class="slds-modal__header">
+                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                    <lightning-icon icon-name="utility:close"
+                       alternative-text="close"
+                       variant="inverse"
+                       size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                 </button>
+                 <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Your Quotation</h2>
+              </header>
+          
+              <!-- modal body start -->
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                <div>
+                    <p><b>NO QUOTATION FOUND</b></p>
+                </div>
+                  
+                </div>
+               
+                <lightning-button label="Cancel" variant="Brand" onclick={hideForm}></lightning-button>
+              </div>    
+           </div> 
+        </section>
+        
+      </template>
+
+
+
+      <!-- View Record Form-->
+
+      <template if:true={viewrecordForm}>
+        <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <!-- modal header start -->
+              <header class="slds-modal__header">
+                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                    <lightning-icon icon-name="utility:close"
+                       alternative-text="close"
+                       variant="inverse"
+                       size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                 </button>
+                 <h2 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate"> Booking Record</h2>
+              </header>
+          
+              <!-- modal body start -->
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                <lightning-record-view-form record-id={propertyBookingrecId} object-api-name={propertyBookingobjectApiName} oncancel={hideForm}>
+                  <div class="slds-grid slds-wrap" >
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-output-field field-name="Property__c"></lightning-output-field>
+                        <lightning-output-field field-name="Customer__c"></lightning-output-field>
+                    </div>
+                    <br>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-output-field field-name="Status__c"></lightning-output-field>
+                        <lightning-output-field field-name="Actual_Price__c"></lightning-output-field>
+                    </div>
+                    
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-output-field field-name="Quoted_Price__c"></lightning-output-field>
+                        <lightning-output-field field-name="Quotation_Generated__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Acquire_Property_By__c"></lightning-output-field>
+                    </div>
+                    
+                </div>
+                </lightning-record-view-form>
+                <lightning-button label="Cancel" variant="Brand" onclick={hideForm}></lightning-button>
+              </div>    
+           </div> 
+        </section>
+        
+      </template>
+
+
+      <!--Edit form-->
+
+      <template if:true={editForm}>
+        <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <!-- modal header start -->
+              <header class="slds-modal__header">
+                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                    <lightning-icon icon-name="utility:close"
+                       alternative-text="close"
+                       variant="inverse"
+                       size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                 </button>
+                 <h2 id="modal-heading-06" class="slds-text-heading_medium slds-hyphenate">Edit Property Booking</h2>
+              </header>
+          
+              <!-- modal body start -->
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-6">
+                <lightning-record-edit-form  object-api-name={propertyBookingobjectApiName} record-id={propertyBookingrecId} onsubmit={update} >
+                  <div class="slds-grid slds-wrap" >
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input-field field-name="Property__c"></lightning-input-field>
+                        <lightning-input-field field-name="Customer__c"></lightning-input-field>
+                    </div>
+                    <br>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input-field field-name="Status__c"></lightning-input-field>
+                        <lightning-input-field field-name="Actual_Price__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input-field field-name="Acquire_Property_By__c"></lightning-input-field>
+                        <lightning-input-field field-name="Quoted_Price__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="submit"></lightning-button> 
+                   <lightning-button label="Cancel" variant="Brand" onclick={hideForm}></lightning-button> 
+                </div>
+            </lightning-record-edit-form>
+              </div>    
+           </div> 
+        </section>
+        
+      </template>
+
+
+  <!--Delete Form-->
+
+  <template if:true={deleteConfirm}>
+    <section role="dialog" tabindex="-1"  aria-modal="true" aria-labelledby="modal-heading-01"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideForm}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-07" class="slds-text-heading_medium slds-hyphenate">Delete Booking Confirmation</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-7">
+            <lightning-card>
+               <b><p>Are you Sure you want to delete the Record</p></b><br>
+               <lightning-button label="Delete" variant="destructive" onclick={deleterec}></lightning-button>
+              <lightning-button label="Cancel" variant="Brand" onclick={hideForm}></lightning-button>
+              </lightning-card>
+              </div>
+              </div>
+              </section>
+  
+   </template>
+    
+
+</template>

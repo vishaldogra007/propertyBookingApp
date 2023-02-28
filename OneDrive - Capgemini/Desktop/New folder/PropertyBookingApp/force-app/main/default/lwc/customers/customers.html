@@ -1,0 +1,38 @@
+<template>
+
+
+
+    <template for:each={customers} for:item="CustRec">
+         
+        <Lightning-card key={CustRec.Id} title={CustRec.Name} icon-name="custom:custom24"  class="slds-col slds-size_5-of-12">
+            <div class="slds-grid slds-gutters slds-wrap slds-card_boundary slds-m-horizontal_large" > 
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>Customer Name</b>{CustRec.Name} </p> 
+                </div> 
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>Aadhar : </b>{CustRec.Aadhar__c}</p> 
+                </div>
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>PAN : </b>{CustRec.PAN__c}</p> 
+                </div>
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>State : </b>{CustRec.State__c}</p> 
+                </div>
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>District : </b>{CustRec.District__c}</p> 
+                </div>
+
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>Email : </b>{CustRec.Email__c}</p> 
+                </div>
+                <div class="slds-col slds-size_6-of-12  ">  
+                    <p><b>Phone Number : </b>{CustRec.Phone__c} </p> 
+                </div>
+                
+                
+               </div> 
+            </Lightning-card>
+          
+        </template>
+    
+</template>
